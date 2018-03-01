@@ -1,0 +1,136 @@
+﻿@model IndexViewModel
+@{
+    ViewData["Title"] = "Manage your account";
+}
+
+<br /><br />
+<h2>@ViewData["Title"].</h2>
+<p class="text-success">@ViewData["StatusMessage"]</p>
+
+<div>
+    <h4>Change your account settings</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Password:</dt>
+        <dd>
+            @if (Model.HasPassword)
+            {
+                <a asp-controller="Manage" asp-action="ChangePassword" class="btn-bracketed">Change</a>
+            }
+            else
+            {
+                <a asp-controller="Manage" asp-action="SetPassword" class="btn-bracketed">Create</a>
+            }
+        </dd>
+
+        <dt>Mobile No:</dt>
+        <dd>
+            @if (Model.MobileNo != null)
+            {
+
+                <p>@Model.MobileNo</p>
+            }
+            else
+            {
+                <p>No Mobile Number Provided!</p>
+            }
+        </dd>
+
+        <dt>Address:</dt>
+        <dd>
+            @if (Model.Address != null)
+            {
+
+                <p>@Model.Address</p>
+            }
+            else
+            {
+                <p>No Address Provided!</p>
+            }
+        </dd>    
+    </dl>
+    
+</div>
+
+@if (!User.IsInRole("Admin"))
+{
+    <h2><span class="glyphicon glyphicon glyphicon-shopping-cart"></span> Order Information: </h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    ProductName
+                </th>
+                <th>
+                    FirstName
+                </th>
+                <th>
+                    LastName
+                </th>
+                <th>
+                    Mobile Phone
+                </th>
+                <th>
+                    City
+                </th>
+                <th>
+                    Country
+                </th>
+                <th>
+                    GST
+                </th>
+                <th>
+                    GrandTotal
+                </th>
+                <th>
+                    Total (Sum)
+                </th>
+                <th>
+                    Status
+                </th>
+
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.MemberOrder)
+            {
+                <tr>
+                    <td>
+                        @item.ProductName
+                    </td>
+                    <td>
+                        @item.FirstName
+                    </td>
+                    <td>
+                        @item.LastName
+                    </td>
+                    <td>
+                        @item.Phone
+                    </td>
+                    <td>
+                        @item.City
+                    </td>
+                    <td>
+                        @item.Country
+                    </td>
+                    <td>
+                        @item.GST
+                    </td>
+                    <td>
+                        @item.GrandTotal
+                    </td>
+                    <td>
+                        @item.Total
+                    </td>
+                    <td>
+                        @item.Status
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+

@@ -1,0 +1,81 @@
+@model QualityHats.Models.Product
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<form asp-action="Create" enctype="multipart/form-data">
+    <div class="form-horizontal">
+        <h4>Product</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="ProductName" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="ProductName" class="form-control" />
+                <span asp-validation-for="ProductName" class="text-danger" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="CategoryID" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="CategoryID" class ="form-control" asp-items="ViewBag.CategoryID"></select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="SupplierID" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="SupplierID" class="form-control" asp-items="ViewBag.SupplierID"></select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="UnitPrice" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="UnitPrice" class="form-control" />
+                <span asp-validation-for="UnitPrice" class="text-danger" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Description" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                @*<input asp-for="Description" class="form-control" />*@
+                <textarea asp-for="Description" class="form-control" cols="40" rows="5"></textarea>
+                <span class="text-danger field-validation-valid" data-valmsg-for="Description" data-valmsg-replace="true"></span>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">         
+            <label asp-for="ImagePath" class="col-md-2 control-label">Image</label>
+            <div class="col-md-4">
+                <span asp-validation-for="ImagePath" class="text-danger" />
+                <input type="file" name="_files" id="_files" onchange="imagePreview( this );" accept="image/*" />
+            </div>           
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">Image Preview</label>
+            <div class="col-md-4">
+                <img id="ProductImage" class="img-rounded" style="width: 300px; height: 200px;" src="@Href("~/images/Default.jpg")" alt="Product Image">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

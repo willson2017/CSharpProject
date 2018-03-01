@@ -1,0 +1,62 @@
+@model IEnumerable<QualityHats.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Image
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model)
+{
+    var imgUrl = @Href("~" + item.ImagePath);
+    var errImg = @Href("~/images/default_hat.jpg");
+    <tr>
+        <td width="150px">
+            <img style="width: 70px; height: auto;" src="@imgUrl" alt="Product Image" onerror="this.onerror = null; this.src = '@errImg'">
+        </td>
+        <td width="200px">
+            @Html.DisplayFor(modelItem => item.ProductName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UnitPrice)
+        </td>
+        <td class="wrapper" width="150px">
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+
+        <td>
+            <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-id="@item.ProductID">
+                <span class="glyphicon glyphicon-shopping-cart"></span>
+                Add To Cart
+            </a>
+        </td>
+    </tr>
+}
+    </tbody>
+</table>
+<div>
+    @if (!User.IsInRole("Admin"))
+            {
+        @await Component.InvokeAsync("ShoppingCartViewModel")
+    }
+</div>
